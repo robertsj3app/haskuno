@@ -1,13 +1,12 @@
+module HaskunoTerms where
+
 -- FILE CONTAINING NECESSARY DATA TYPES FOR HASKUNO
 
 -- The four possible colors on an Uno card.
 data Color = Red | Yellow | Blue | Green
 
 -- The possible card types a player can play.
-data Card = Base Int Color | Skip Color | DrawTwo Color | Wild | DrawFourWild | Reverse Color
-
--- When a reverse card is played, the turn direction changes.
-data TurnDirection = CWise | CCWise
+data Card = Base Integer Color | Skip Color | DrawTwo Color | Wild | DrawFourWild | Reverse Color
 
 -- A deck is a pile (list) of cards.
 type Deck = [Card]
@@ -17,3 +16,8 @@ type Hand = [Card]
 
 -- The discard/played pile is a pile (list) of cards.
 type DiscardPile = [Card]
+
+-- Record to keep track of various things in the game. (Recommended for use by Dr. Polonsky)
+data StateRecord = StateRecord
+  { currentPlayer :: Integer
+  }
