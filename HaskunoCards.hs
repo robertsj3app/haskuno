@@ -29,13 +29,11 @@ skipCard currentPlayer = currentPlayer
 -- The other player must draw two cards
 -- Add two to the other player's hand size
 -- The current player is allowed a consecutive turn
+-- If next player has a draw two, they are allowed to stack it with the previous
 
 -- CONSTRAINT: Draw Two card can only be played if:
 -- current card matches the draw two color or
 -- current card is a draw two card
-
--- OPTION: Do we allow draw two cards to be stackable?
--- Ex: If player 1 plays a draw two, is player 2 allowed to stack a draw two to force player 1 to draw four?
 
 drawTwoCard :: StateRecord -> StateRecord
 drawTwoCard = undefined
