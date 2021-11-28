@@ -12,6 +12,7 @@ shuffle xs [] = xs
 shuffle xs (i:is) = shuffle (shuffleHelper xs i) is
 
 sameColor :: Card -> Card -> Bool -- check if two cards have the same color
+sameColor x y = True -- placeholder
 {--
     PSEUDOCODE:
     samecolor (PATTERN MATCH COLOR) (PATTERN MATCH COLOR) = True
@@ -30,6 +31,7 @@ filterFirstOccurrence f [] = []
 filterFirstOccurrence f (x:xs) = if f x then xs else x : filterFirstOccurrence f xs
 
 playCard :: (Hand, Card, DiscardPile) -> (Hand, DiscardPile) -- remove card from hand and add to discard pile
+playCard (x,y,z) = ([], []) -- placeholder
 {--
     PSEUDOCODE:
     playcard (h, c, d) = if card is elem of hand and card is valid selection

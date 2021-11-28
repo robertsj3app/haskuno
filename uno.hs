@@ -1,5 +1,16 @@
 module Uno where
     import DeckFuncs
+    import System.Random
+
+updateGameState :: StateRecord -> Deck -> DiscardPile -> [Player] -> TurnDirection -> StateRecord
+{--
+    PSEUDOCODE
+        for each element in old staterecord
+            if element is deck and element /= deck argument
+                update that element in record
+            repeat for each element type (player, deck, etc)
+        return new staterecord
+--}
 
 main :: IO ()
 {--
