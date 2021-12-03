@@ -1,6 +1,9 @@
 module DeckFuncs where
 import HaskunoTerms
 
+getNextPlayer :: GameState -> GameState
+getNextPlayer sr = StateRecord {currentPlayer = if currentPlayer sr == 1 then 2 else 1, playerList = playerList sr, turnDirection = turnDirection sr, deck = deck sr, discardPile = discardPile sr}
+
 drawCard :: (Deck, Hand) -> (Deck, Hand) -- remove card from deck and add to hand
 drawCard (x, y) = (tail x, head x : y)
 
