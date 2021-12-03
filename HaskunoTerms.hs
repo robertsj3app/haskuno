@@ -4,11 +4,11 @@ module HaskunoTerms where
 
 -- The four possible colors on an Uno card.
 data Color = Red | Yellow | Blue | Green
-    deriving (Show, Eq)
+  deriving (Show, Eq)
 
 -- The possible card types a player can play.
 data Card = Base Integer Color | Skip Color | DrawTwo Color | Wild | DrawFourWild | Reverse Color
-    deriving (Show, Eq)
+  deriving (Show, Eq)
 
 -- When a reverse card is played, the turn direction changes.
 data TurnDirection = CWise | CCWise
@@ -29,3 +29,4 @@ type Player = (String, Hand)
 data StateRecord = StateRecord
   { currentPlayer :: Integer
   }
+  deriving (Show)

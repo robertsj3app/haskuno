@@ -21,7 +21,7 @@ baseCard = undefined
 -- current card is a skip card
 
 skipCard :: StateRecord -> StateRecord
-skipCard currentPlayer = currentPlayer
+skipCard sr = StateRecord {currentPlayer = if currentPlayer sr == 1 then 1 else 2}
 
 -- If a player plays a draw two card:
 -- Add this card to the discard pile
@@ -71,7 +71,7 @@ drawFourWildCard = undefined
 -- current card is a reverse card
 
 reverseCard :: StateRecord -> StateRecord
-reverseCard currentPlayer = currentPlayer
+reverseCard sr = StateRecord {currentPlayer = if currentPlayer sr == 1 then 1 else 2}
 
 getNextPlayer :: StateRecord -> StateRecord
 getNextPlayer sr = StateRecord {currentPlayer = if currentPlayer sr == 1 then 2 else 1}
