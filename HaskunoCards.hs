@@ -1,4 +1,5 @@
 import HaskunoTerms
+import DeckFuncs
 
 -- If a player plays a base card:
 -- Add this card to the discard pile
@@ -8,7 +9,7 @@ import HaskunoTerms
 -- current card matches the base card color or
 -- current card matches the base card value
 
-baseCard :: StateRecord -> StateRecord
+baseCard :: GameState -> GameState
 baseCard = undefined
 
 -- If a player plays a skip card:
@@ -20,8 +21,8 @@ baseCard = undefined
 -- current card matches the skip card color or
 -- current card is a skip card
 
-skipCard :: StateRecord -> StateRecord
-skipCard sr = StateRecord {currentPlayer = if currentPlayer sr == 1 then 1 else 2}
+skipCard :: GameState -> GameState
+skipCard sr = StateRecord {currentPlayer = if currentPlayer sr == 1 then 1 else 2, playerList = playerList sr, turnDirection = turnDirection sr, deck = deck sr, discardPile = discardPile sr}
 
 -- If a player plays a draw two card:
 -- Add this card to the discard pile
@@ -35,8 +36,8 @@ skipCard sr = StateRecord {currentPlayer = if currentPlayer sr == 1 then 1 else 
 -- current card matches the draw two color or
 -- current card is a draw two card
 
-drawTwoCard :: StateRecord -> StateRecord
-drawTwoCard = undefined
+drawTwoCard :: GameState -> GameState
+drawTwoCard sr = undefined
 
 -- If a player plays a wild card:
 -- Current player chooses a new current color
@@ -45,7 +46,7 @@ drawTwoCard = undefined
 
 -- NO CONSTRAINTS
 
-wildCard :: StateRecord -> StateRecord
+wildCard :: GameState -> GameState
 wildCard = undefined
 
 -- If a player plays a draw four wild card:
@@ -58,7 +59,7 @@ wildCard = undefined
 
 -- NO CONSTRAINTS
 
-drawFourWildCard :: StateRecord -> StateRecord
+drawFourWildCard :: GameState -> GameState
 drawFourWildCard = undefined
 
 -- If a player plays a reverse card:
@@ -70,11 +71,5 @@ drawFourWildCard = undefined
 -- current card matches the reverse card color or
 -- current card is a reverse card
 
-reverseCard :: StateRecord -> StateRecord
-reverseCard sr = StateRecord {currentPlayer = if currentPlayer sr == 1 then 1 else 2}
-
-getNextPlayer :: StateRecord -> StateRecord
-getNextPlayer sr = StateRecord {currentPlayer = if currentPlayer sr == 1 then 2 else 1}
-
-getNextPlayer' :: StateRecord -> Integer
-getNextPlayer' sr = if currentPlayer sr == 1 then 2 else 1
+reverseCard :: GameState -> GameState
+reverseCard sr = StateRecord {currentPlayer = if currentPlayer sr == 1 then 1 else 2, playerList = playerList sr, turnDirection = turnDirection sr, deck = deck sr, discardPile = discardPile sr}

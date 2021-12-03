@@ -46,6 +46,7 @@ main :: StateRecord -> IO ()
             terminate
         else
             set current player to next in turn direction (index into player list either ++ or --)
+        updateGameState
         jump to loop
 
 --}
