@@ -75,3 +75,6 @@ reverseCard currentPlayer = currentPlayer
 
 getNextPlayer :: StateRecord -> StateRecord
 getNextPlayer sr = StateRecord {currentPlayer = if currentPlayer sr == 1 then 2 else 1}
+
+getNextPlayer' :: StateRecord -> Integer
+getNextPlayer' sr = if currentPlayer sr == 1 then 2 else 1
