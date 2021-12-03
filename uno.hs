@@ -1,6 +1,5 @@
 module Uno where
-    import DeckFuncs
-    import System.Random
+import System.Random
 
 updateGameState :: StateRecord -> Deck -> DiscardPile -> [Player] -> TurnDirection -> StateRecord
 {--
@@ -12,7 +11,7 @@ updateGameState :: StateRecord -> Deck -> DiscardPile -> [Player] -> TurnDirecti
         return new staterecord
 --}
 
-main :: IO ()
+main :: StateRecord -> IO ()
 {--
     PSEUDOCODE
     Prompt number of players

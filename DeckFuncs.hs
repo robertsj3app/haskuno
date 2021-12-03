@@ -1,5 +1,5 @@
 module DeckFuncs where
-    import HaskunoTerms
+import HaskunoTerms
 
 drawCard :: (Deck, Hand) -> (Deck, Hand) -- remove card from deck and add to hand
 drawCard (x, y) = (tail x, head x : y)

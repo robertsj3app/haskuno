@@ -12,6 +12,7 @@ data Card = Base Integer Color | Skip Color | DrawTwo Color | Wild | DrawFourWil
 
 -- When a reverse card is played, the turn direction changes.
 data TurnDirection = CWise | CCWise
+    deriving Show
 
 -- A deck is a pile (list) of cards.
 type Deck = [Card]
@@ -26,6 +27,12 @@ type DiscardPile = [Card]
 type Player = (String, Hand)
 
 -- Record to keep track of various things in the game. (Recommended for use by Dr. Polonsky)
-data StateRecord = StateRecord
-  { currentPlayer :: Integer
+data GameState = StateRecord
+  { 
+    currentPlayer :: Integer,
+    playerList :: [Player],
+    turnDirection :: TurnDirection,
+    deck :: Deck,
+    discardPile :: DiscardPile
   }
+  deriving Show
