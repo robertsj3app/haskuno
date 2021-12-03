@@ -15,12 +15,12 @@ shuffle xs [] = xs
 shuffle xs (i:is) = shuffle (shuffleHelper xs i) is
 
 sameColor :: Card -> Card -> Bool -- check if two cards have the same color
-sameColor x y = True -- placeholder
-{--
-    PSEUDOCODE:
-    samecolor (PATTERN MATCH COLOR) (PATTERN MATCH COLOR) = True
-        repeat above for each color choice
---}
+sameColor (Base _ x) (Base _ y) = x == y
+sameColor (Skip x) (Skip y) = x == y
+sameColor (DrawTwo x) (DrawTwo y) = x == y
+sameColor (Reverse x) (Reverse y) = x == y
+sameColor _ _ = False
+
 
 sameNumber :: Card -> Card -> Bool -- check if two cards have the same number
 sameNumber (Base x _) (Base y _) = x == y
