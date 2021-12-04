@@ -17,5 +17,5 @@ cardDeck = [Base 0 Red, Base 1 Red, Base 2 Red, Base 3 Red, Base 4 Red, Base 5 R
             Wild Undefined, Wild Undefined, Wild Undefined, Wild Undefined,
             DrawFourWild Undefined, DrawFourWild Undefined, DrawFourWild Undefined, DrawFourWild Undefined]
 
-numCards :: Deck -> Integer
+numCards :: [Card] -> Integer
 numCards d = fromIntegral (length d)

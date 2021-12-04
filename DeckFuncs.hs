@@ -1,5 +1,8 @@
 module DeckFuncs where
 import HaskunoTerms
+import System.Random
+import Data.Array.IO
+import Control.Monad
 
 drawCard :: GameState -> Integer -> Integer -> GameState -- remove top card from deck and add to hand in accordance to GameState record
 drawCard sr who howmany = StateRecord {currentPlayer = currentPlayer sr, playerList = drawHelper (playerList sr) (deck sr) who howmany, turnDirection = turnDirection sr, deck = drop (fromIntegral howmany) (deck sr), discardPile = discardPile sr}
@@ -16,23 +19,25 @@ playHelper ps who which = take (fromIntegral who) ps ++ (fst (ps !! fromIntegral
 dropCardAt :: Integer -> Hand -> Hand -- determines card to remove from hand via index
 dropCardAt n h = take (fromIntegral n) h ++ drop (fromIntegral n + 1) h
 
-shuffleDeck :: GameState -> [Integer] -> GameState -- shuffles the deck in accordance to GameState record
-shuffleDeck sr seed = StateRecord {currentPlayer = currentPlayer sr, playerList = playerList sr, turnDirection = turnDirection sr, deck = shuffle (deck sr) seed, discardPile = discardPile sr}
+updateDeck :: GameState -> Deck -> GameState -- shuffles the deck in accordance to GameState record
+updateDeck sr d = StateRecord {currentPlayer = currentPlayer sr, playerList = playerList sr, turnDirection = turnDirection sr, deck = d, discardPile = discardPile sr}
 
-shuffle :: Deck -> [Integer] -> Deck -- take seed (list of int, generated randomly at runtime) and uses that seed to drive shufflehelper; not sure if this is sufficiently random yet
-shuffle xs [] = xs
-shuffle xs (i:is) = shuffle (shuffleHelper xs i) is
+updateDiscardPile :: GameState -> Deck -> GameState -- shuffles the deck in accordance to GameState record
+updateDiscardPile sr dp = StateRecord {currentPlayer = currentPlayer sr, playerList = playerList sr, turnDirection = turnDirection sr, deck = deck sr, discardPile = dp}
 
-shuffleHelper :: Deck -> Integer -> Deck -- shift card at position i to head of deck
-shuffleHelper xs i = p : filterFirstOccurrence (== p) xs where p = (xs !! fromIntegral i)
-
-swapElementsAt :: Integer -> Integer -> [a] -> [a]
-swapElementsAt i j xs = let elemI = xs !! fromIntegral i
-                            elemJ = xs !! fromIntegral j
-                            left = take (fromIntegral i) xs
-                            middle = take (fromIntegral j - fromIntegral i - 1) (drop (fromIntegral i + 1) xs)
-                            right = drop (fromIntegral j + 1) xs
-                        in  left ++ [elemJ] ++ middle ++ [elemI] ++ right
+shuffle :: Deck -> IO Deck
+shuffle xs = do
+        ar <- newArray n xs
+        forM [1..n] $ \i -> do
+            j <- randomRIO (i,n)
+            vi <- readArray ar i
+            vj <- readArray ar j
+            writeArray ar j vi
+            return vj
+  where
+    n = length xs
+    newArray :: Int -> [a] -> IO (IOArray Int a)
+    newArray n xs =  newListArray (1,n) xs
 
 getColor :: Card -> Color
 getColor (Base x y) = y
@@ -42,8 +47,16 @@ getColor (Wild x) = x
 getColor (DrawFourWild x) = x
 getColor (Reverse x) = x
 
+getType :: Card -> String
+getType (Base x _) = "Number"
+getType (Skip _) = "Skip"
+getType (DrawTwo _) = "DrawTwo"
+getType (Wild _) = "Wild"
+getType (DrawFourWild _) = "DrawFourWild"
+getType (Reverse _) = "Reverse"
+
 sameColor :: Card -> Card -> Bool -- check if two cards have the same color
-sameColor x y = if getColor x == Undefined then True else getColor x == getColor y
+sameColor x y = if getColor x == Undefined || getColor y == Undefined then True else getColor x == getColor y
 
 sameValue :: Card -> Card -> Bool -- check if two cards have the same value (either card type or number)
 sameValue (Base x _) (Base y _) = x == y
