@@ -3,16 +3,16 @@ module HaskunoTerms where
 -- FILE CONTAINING NECESSARY DATA TYPES FOR HASKUNO
 
 -- The four possible colors on an Uno card.
-data Color = Red | Yellow | Blue | Green
+data Color = Red | Yellow | Blue | Green | Undefined
   deriving (Show, Eq)
 
 -- The possible card types a player can play.
-data Card = Base Integer Color | Skip Color | DrawTwo Color | Wild | DrawFourWild | Reverse Color
+data Card = Base Integer Color | Skip Color | DrawTwo Color | Wild Color | DrawFourWild Color | Reverse Color
   deriving (Show, Eq)
 
 -- When a reverse card is played, the turn direction changes.
 data TurnDirection = CWise | CCWise
-    deriving Show
+    deriving (Show, Eq)
 
 -- A deck is a pile (list) of cards.
 type Deck = [Card]

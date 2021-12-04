@@ -1,17 +1,44 @@
 module Uno where
+import DeckFuncs
+import GameFuncs
+import HaskunoCards
+import HaskunoTerms
 import System.Random
+import Control.Monad
 
-updateGameState :: StateRecord -> Deck -> DiscardPile -> [Player] -> TurnDirection -> StateRecord
-{--
-    PSEUDOCODE
-        for each element in old staterecord
-            if element is deck and element /= deck argument
-                update that element in record
-            repeat for each element type (player, deck, etc)
-        return new staterecord
---}
+emptyGameState :: GameState -- initial GameState structure
+emptyGameState = StateRecord {currentPlayer = 0, playerList = [], turnDirection = CWise, deck = cardDeck, discardPile = []}
 
-main :: StateRecord -> IO ()
+getPlayers :: GameState -> Integer -> IO GameState
+getPlayers gs i = do
+    if i > 0 then do
+        putStrLn "Enter your name\n"
+        name <- getLine
+        getPlayers (addPlayer gs name) (i - 1)
+    else do
+        return gs
+
+generateShuffleSeed :: Integer -> Integer -> IO [Integer]
+generateShuffleSeed n i = sequence $ generateShuffleSeed2 n i
+
+generateShuffleSeed2 :: Integer -> Integer -> [IO Integer]
+generateShuffleSeed2 n i = if i < n then randomRIO (i, n - 1::Integer) : generateShuffleSeed2 n (i+1) else [randomRIO (i, n - 1::Integer)]
+
+test :: IO ()
+test = do
+    seed <- generateShuffleSeed 108 0
+    print seed
+
+main :: IO ()
+main = do 
+    putStrLn "\nWelcome to HaskUno!\n\nHow many people will be playing?\n"
+    num <- getLine
+    let numPlayers = (read num :: Integer)
+    stateWithPlayers <- getPlayers emptyGameState numPlayers
+    shuffleSeed <- generateShuffleSeed 108 0
+    let startingState = shuffleDeck stateWithPlayers shuffleSeed
+    print startingState
+    
 {--
     PSEUDOCODE
     Prompt number of players
@@ -49,3 +76,7 @@ main :: StateRecord -> IO ()
         jump to loop
 
 --}
+
+gameLoop :: GameState -> IO ()
+gameLoop gs = do
+    print gs
