@@ -86,7 +86,7 @@ gameLoop gs = do
                 let chosenCard = (hand !! fromIntegral (actionNum - 1))
                 if validSelection (chosenCard) (discardPile gs) then do
                     putStrLn (getNameFromIndex gs (currentPlayer gs) ++ " played " ++ show chosenCard)
-                    if getType chosenCard == "Skip" then do
+                    if getType chosenCard == "Skip" || (getType chosenCard == "Reverse" && length (playerList gs) == 2) then do
                         putStrLn (getNameFromIndex gs (fixOverhang ((getTurnDirection gs) (currentPlayer gs) 1) (playerList gs)) ++ "'s Turn was skipped!")
                         gameLoop (skipNextPlayer (playCard gs (currentPlayer gs) (actionNum - 1)))
                     else if getType chosenCard == "Reverse" then do
