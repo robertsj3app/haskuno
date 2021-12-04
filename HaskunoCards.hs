@@ -1,75 +1,118 @@
+module HaskunoCards where
+
 import HaskunoTerms
-import DeckFuncs
 
--- If a player plays a base card:
--- Add this card to the discard pile
--- Subtract one from current player's hand size
+cardDeck :: Deck
+cardDeck =
+  [ Base 0 Red,
+    Base 1 Red,
+    Base 2 Red,
+    Base 3 Red,
+    Base 4 Red,
+    Base 5 Red,
+    Base 6 Red,
+    Base 7 Red,
+    Base 8 Red,
+    Base 9 Red,
+    Base 1 Red,
+    Base 2 Red,
+    Base 3 Red,
+    Base 4 Red,
+    Base 5 Red,
+    Base 6 Red,
+    Base 7 Red,
+    Base 8 Red,
+    Base 9 Red,
+    Skip Red,
+    Skip Red,
+    Reverse Red,
+    Reverse Red,
+    DrawTwo Red,
+    DrawTwo Red,
+    Base 0 Blue,
+    Base 1 Blue,
+    Base 2 Blue,
+    Base 3 Blue,
+    Base 4 Blue,
+    Base 5 Blue,
+    Base 6 Blue,
+    Base 7 Blue,
+    Base 8 Blue,
+    Base 9 Blue,
+    Base 1 Blue,
+    Base 2 Blue,
+    Base 3 Blue,
+    Base 4 Blue,
+    Base 5 Blue,
+    Base 6 Blue,
+    Base 7 Blue,
+    Base 8 Blue,
+    Base 9 Blue,
+    Skip Blue,
+    Skip Blue,
+    Reverse Blue,
+    Reverse Blue,
+    DrawTwo Blue,
+    DrawTwo Blue,
+    Base 0 Yellow,
+    Base 1 Yellow,
+    Base 2 Yellow,
+    Base 3 Yellow,
+    Base 4 Yellow,
+    Base 5 Yellow,
+    Base 6 Yellow,
+    Base 7 Yellow,
+    Base 8 Yellow,
+    Base 9 Yellow,
+    Base 1 Yellow,
+    Base 2 Yellow,
+    Base 3 Yellow,
+    Base 4 Yellow,
+    Base 5 Yellow,
+    Base 6 Yellow,
+    Base 7 Yellow,
+    Base 8 Yellow,
+    Base 9 Yellow,
+    Skip Yellow,
+    Skip Yellow,
+    Reverse Yellow,
+    Reverse Yellow,
+    DrawTwo Yellow,
+    DrawTwo Yellow,
+    Base 0 Green,
+    Base 1 Green,
+    Base 2 Green,
+    Base 3 Green,
+    Base 4 Green,
+    Base 5 Green,
+    Base 6 Green,
+    Base 7 Green,
+    Base 8 Green,
+    Base 9 Green,
+    Base 1 Green,
+    Base 2 Green,
+    Base 3 Green,
+    Base 4 Green,
+    Base 5 Green,
+    Base 6 Green,
+    Base 7 Green,
+    Base 8 Green,
+    Base 9 Green,
+    Skip Green,
+    Skip Green,
+    Reverse Green,
+    Reverse Green,
+    DrawTwo Green,
+    DrawTwo Green,
+    Wild Undefined,
+    Wild Undefined,
+    Wild Undefined,
+    Wild Undefined,
+    DrawFourWild Undefined,
+    DrawFourWild Undefined,
+    DrawFourWild Undefined,
+    DrawFourWild Undefined
+  ]
 
--- CONSTRAINT: Base card can only be played if:
--- current card matches the base card color or
--- current card matches the base card value
-
-baseCard :: GameState -> GameState
-baseCard = undefined
-
--- If a player plays a skip card:
--- Add this card to discard pile
--- Subtract one from current player's hand size
--- The current player is allowed a consecutive turn
-
--- CONSTRAINT: Skip Card can only be played if:
--- current card matches the skip card color or
--- current card is a skip card
-
-skipCard :: GameState -> GameState
-skipCard sr = StateRecord {currentPlayer = if currentPlayer sr == 1 then 1 else 2, playerList = playerList sr, turnDirection = turnDirection sr, deck = deck sr, discardPile = discardPile sr}
-
--- If a player plays a draw two card:
--- Add this card to the discard pile
--- Subtract one from the current player's hand size
--- The other player must draw two cards
--- Add two to the other player's hand size
--- The current player is allowed a consecutive turn
--- If next player has a draw two, they are allowed to stack it with the previous
-
--- CONSTRAINT: Draw Two card can only be played if:
--- current card matches the draw two color or
--- current card is a draw two card
-
-drawTwoCard :: GameState -> GameState
-drawTwoCard sr = undefined
-
--- If a player plays a wild card:
--- Current player chooses a new current color
--- Add this card to the discard pile
--- Subtract one from the current player's hand size
-
--- NO CONSTRAINTS
-
-wildCard :: GameState -> GameState
-wildCard = undefined
-
--- If a player plays a draw four wild card:
--- Current player chooses a new current color
--- Add this card to the discard pile
--- Subtract one from the current player's hand size
--- Next player must draw four cards from the deck
--- Add four to the next player's hand size
--- Current player is allowed a consecutive turn
-
--- NO CONSTRAINTS
-
-drawFourWildCard :: GameState -> GameState
-drawFourWildCard = undefined
-
--- If a player plays a reverse card:
--- Add this card to discard pile
--- Subtract one from current player's hand size
--- The current player is allowed a consecutive turn
-
--- CONSTRAINT: Reverse Card can only be played if:
--- current card matches the reverse card color or
--- current card is a reverse card
-
-reverseCard :: GameState -> GameState
-reverseCard sr = StateRecord {currentPlayer = if currentPlayer sr == 1 then 1 else 2, playerList = playerList sr, turnDirection = turnDirection sr, deck = deck sr, discardPile = discardPile sr}
+numCards :: [Card] -> Integer
+numCards d = fromIntegral (length d)
