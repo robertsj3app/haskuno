@@ -1,5 +1,4 @@
 module GameFuncs where
-
 import HaskunoTerms
 
 addPlayer :: GameState -> String -> GameState -- adds player to player list in accordance to GameState record
@@ -12,10 +11,9 @@ getNextPlayer :: GameState -> GameState -- gets next player in accordance to Gam
 getNextPlayer sr = StateRecord {currentPlayer = fixOverhang ((getTurnDirection sr) (currentPlayer sr) 1) (playerList sr), playerList = playerList sr, turnDirection = turnDirection sr, deck = deck sr, discardPile = discardPile sr}
 
 fixOverhang :: Integer -> [Player] -> Integer -- loops to beginning or ending of player list if necessary
-fixOverhang x ps
-  | x < 0 = (fromIntegral (length ps)) - 1
-  | x > (fromIntegral (length ps)) - 1 = 0
-  | otherwise = x
+fixOverhang x ps | x < 0 = (fromIntegral (length ps)) - 1
+                 | x > (fromIntegral (length ps)) - 1 = 0
+                 | otherwise = x
 
 getTurnDirection :: GameState -> (Integer -> Integer -> Integer) -- returns the turn direction from the GameState record
 getTurnDirection sr = if turnDirection sr == CWise then (+) else (-)

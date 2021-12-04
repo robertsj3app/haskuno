@@ -1,9 +1,8 @@
 module DeckFuncs where
-
-import Control.Monad
-import Data.Array.IO
 import HaskunoTerms
 import System.Random
+import Data.Array.IO
+import Control.Monad
 
 drawCard :: GameState -> Integer -> Integer -> GameState -- remove top card from deck and add to hand in accordance to GameState record
 drawCard sr who howmany = StateRecord {currentPlayer = currentPlayer sr, playerList = drawHelper (playerList sr) (deck sr) who howmany, turnDirection = turnDirection sr, deck = drop (fromIntegral howmany) (deck sr), discardPile = discardPile sr}
@@ -12,7 +11,7 @@ drawHelper :: [Player] -> Deck -> Integer -> Integer -> [Player] -- remove top c
 drawHelper ps d who howmany = take (fromIntegral who) ps ++ (fst (ps !! fromIntegral who), snd (ps !! fromIntegral who) ++ take (fromIntegral howmany) d) : drop (fromIntegral (who + 1)) ps
 
 playCard :: GameState -> Integer -> Integer -> GameState -- remove card at index and add to discard pile in accordance to GameState record
-playCard sr who which = StateRecord {currentPlayer = currentPlayer sr, playerList = playHelper (playerList sr) who which, turnDirection = turnDirection sr, deck = deck sr, discardPile = (snd (playerList sr !! fromIntegral who) !! fromIntegral which) : discardPile sr}
+playCard sr who which = StateRecord {currentPlayer = currentPlayer sr, playerList = playHelper (playerList sr) who which, turnDirection = turnDirection sr, deck = deck sr, discardPile = (snd(playerList sr !! fromIntegral who) !! fromIntegral which) : discardPile sr}
 
 playHelper :: [Player] -> Integer -> Integer -> [Player] -- removes card from player's hand using dropCardAt
 playHelper ps who which = take (fromIntegral who) ps ++ (fst (ps !! fromIntegral who), dropCardAt which (snd (ps !! fromIntegral who))) : drop (fromIntegral (who + 1)) ps
@@ -28,17 +27,17 @@ updateDiscardPile sr dp = StateRecord {currentPlayer = currentPlayer sr, playerL
 
 shuffle :: Deck -> IO Deck
 shuffle xs = do
-  ar <- newArray n xs
-  forM [1 .. n] $ \i -> do
-    j <- randomRIO (i, n)
-    vi <- readArray ar i
-    vj <- readArray ar j
-    writeArray ar j vi
-    return vj
+        ar <- newArray n xs
+        forM [1..n] $ \i -> do
+            j <- randomRIO (i,n)
+            vi <- readArray ar i
+            vj <- readArray ar j
+            writeArray ar j vi
+            return vj
   where
     n = length xs
     newArray :: Int -> [a] -> IO (IOArray Int a)
-    newArray n xs = newListArray (1, n) xs
+    newArray n xs =  newListArray (1,n) xs
 
 getColor :: Card -> Color
 getColor (Base x y) = y
@@ -66,11 +65,18 @@ sameValue (DrawTwo _) (DrawTwo _) = True
 sameValue (Wild _) (Wild _) = True
 sameValue (DrawFourWild _) (DrawFourWild _) = True
 sameValue (Reverse _) (Reverse _) = True
-sameValue _ _ = False
+sameValue _ _ = False 
 
 validSelection :: Card -> DiscardPile -> Bool
-validSelection x (y : ys) = sameColor x y || sameValue x y
+validSelection x [] = True
+validSelection x (y:ys) = sameColor x y || sameValue x y
+
+clearWilds :: DiscardPile -> DiscardPile
+clearWilds [] = []
+clearWilds (x:xs) | getType x == "Wild" = (Wild Undefined) : clearWilds xs
+                  | getType x == "DrawFourWild" = (DrawFourWild Undefined) : clearWilds xs
+                  | otherwise = x : clearWilds xs
 
 filterFirstOccurrence :: (a -> Bool) -> [a] -> [a] -- remove first occurrence of list item that satisfies function f
 filterFirstOccurrence f [] = []
-filterFirstOccurrence f (x : xs) = if f x then xs else x : filterFirstOccurrence f xs
+filterFirstOccurrence f (x:xs) = if f x then xs else x : filterFirstOccurrence f xs
