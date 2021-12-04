@@ -68,7 +68,14 @@ sameValue (Reverse _) (Reverse _) = True
 sameValue _ _ = False 
 
 validSelection :: Card -> DiscardPile -> Bool
+validSelection x [] = True
 validSelection x (y:ys) = sameColor x y || sameValue x y
+
+clearWilds :: DiscardPile -> DiscardPile
+clearWilds [] = []
+clearWilds (x:xs) | getType x == "Wild" = (Wild Undefined) : clearWilds xs
+                  | getType x == "DrawFourWild" = (DrawFourWild Undefined) : clearWilds xs
+                  | otherwise = x : clearWilds xs
 
 filterFirstOccurrence :: (a -> Bool) -> [a] -> [a] -- remove first occurrence of list item that satisfies function f
 filterFirstOccurrence f [] = []
