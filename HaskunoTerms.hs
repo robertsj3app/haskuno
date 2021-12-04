@@ -1,7 +1,5 @@
 module HaskunoTerms where
 
--- FILE CONTAINING NECESSARY DATA TYPES FOR HASKUNO
-
 -- The four possible colors on an Uno card.
 data Color = Red | Yellow | Blue | Green | Undefined
   deriving (Show, Eq)

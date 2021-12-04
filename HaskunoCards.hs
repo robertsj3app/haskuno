@@ -1,7 +1,7 @@
 module HaskunoCards where
 import HaskunoTerms
 
-cardDeck :: Deck
+cardDeck :: Deck -- initialized deck of cards used for the game
 cardDeck = [Base 0 Red, Base 1 Red, Base 2 Red, Base 3 Red, Base 4 Red, Base 5 Red, Base 6 Red, Base 7 Red, Base 8 Red, Base 9 Red,
             Base 1 Red, Base 2 Red, Base 3 Red, Base 4 Red, Base 5 Red, Base 6 Red, Base 7 Red, Base 8 Red, Base 9 Red,
             Skip Red, Skip Red, Reverse Red, Reverse Red, DrawTwo Red, DrawTwo Red,
@@ -17,5 +17,5 @@ cardDeck = [Base 0 Red, Base 1 Red, Base 2 Red, Base 3 Red, Base 4 Red, Base 5 R
             Wild Undefined, Wild Undefined, Wild Undefined, Wild Undefined,
             DrawFourWild Undefined, DrawFourWild Undefined, DrawFourWild Undefined, DrawFourWild Undefined]
 
-numCards :: [Card] -> Integer
+numCards :: [Card] -> Integer -- test function to ensure that our deck held the correct number of cards
 numCards d = fromIntegral (length d)

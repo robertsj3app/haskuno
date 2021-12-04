@@ -19,11 +19,11 @@ getPlayers gs i = do
     else do
         return gs
 
-checkWin :: [Player] -> String
+checkWin :: [Player] -> String -- if player's hand size is zero, they have won
 checkWin [] = ""
 checkWin (x:xs) = if numCards (snd x) == 0 then fst x else checkWin xs 
 
-checkUno :: [Player] -> String
+checkUno :: [Player] -> String -- if player's hand size is one, they have Uno!
 checkUno [] = ""
 checkUno (x:xs) = if numCards (snd x) == 1 then fst x else checkUno xs 
 
@@ -49,7 +49,7 @@ main = do
     let readyState = startingHands shuffledState 0 numPlayers
     gameLoop readyState
 
-gameLoop :: GameState -> IO ()
+gameLoop :: GameState -> IO () -- loop where game logic happens
 gameLoop gs = do
     if checkWin (playerList gs) /= "" then do
         putStrLn (checkWin (playerList gs) ++ " has no cards left in hand and has won the game!")

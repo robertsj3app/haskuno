@@ -4,7 +4,7 @@ import HaskunoTerms
 addPlayer :: GameState -> String -> GameState -- adds player to player list in accordance to GameState record
 addPlayer sr name = StateRecord {currentPlayer = currentPlayer sr, playerList = (playerList sr) ++ [(name, [])], turnDirection = turnDirection sr, deck = deck sr, discardPile = discardPile sr}
 
-getNameFromIndex :: GameState -> Integer -> String
+getNameFromIndex :: GameState -> Integer -> String -- gets player name from list of players based on index
 getNameFromIndex sr i = fst (playerList sr !! fromIntegral i)
 
 getNextPlayer :: GameState -> GameState -- gets next player in accordance to GameState record

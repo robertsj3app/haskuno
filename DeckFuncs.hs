@@ -22,10 +22,10 @@ dropCardAt n h = take (fromIntegral n) h ++ drop (fromIntegral n + 1) h
 updateDeck :: GameState -> Deck -> GameState -- shuffles the deck in accordance to GameState record
 updateDeck sr d = StateRecord {currentPlayer = currentPlayer sr, playerList = playerList sr, turnDirection = turnDirection sr, deck = d, discardPile = discardPile sr}
 
-updateDiscardPile :: GameState -> Deck -> GameState -- shuffles the deck in accordance to GameState record
+updateDiscardPile :: GameState -> Deck -> GameState -- updates the discard pile in accordance to GameState record
 updateDiscardPile sr dp = StateRecord {currentPlayer = currentPlayer sr, playerList = playerList sr, turnDirection = turnDirection sr, deck = deck sr, discardPile = dp}
 
-shuffle :: Deck -> IO Deck
+shuffle :: Deck -> IO Deck -- shuffles the deck of cards before play (taken from https://wiki.haskell.org/Random_shuffle)
 shuffle xs = do
         ar <- newArray n xs
         forM [1..n] $ \i -> do
@@ -39,7 +39,7 @@ shuffle xs = do
     newArray :: Int -> [a] -> IO (IOArray Int a)
     newArray n xs =  newListArray (1,n) xs
 
-getColor :: Card -> Color
+getColor :: Card -> Color -- returns the color of a card
 getColor (Base x y) = y
 getColor (Skip x) = x
 getColor (DrawTwo x) = x
@@ -47,7 +47,7 @@ getColor (Wild x) = x
 getColor (DrawFourWild x) = x
 getColor (Reverse x) = x
 
-getType :: Card -> String
+getType :: Card -> String -- returns the type or value of a card
 getType (Base x _) = "Number"
 getType (Skip _) = "Skip"
 getType (DrawTwo _) = "DrawTwo"
@@ -67,7 +67,7 @@ sameValue (DrawFourWild _) (DrawFourWild _) = True
 sameValue (Reverse _) (Reverse _) = True
 sameValue _ _ = False 
 
-validSelection :: Card -> DiscardPile -> Bool
+validSelection :: Card -> DiscardPile -> Bool -- checks if two cards have the same value or same color
 validSelection x [] = True
 validSelection x (y:ys) = sameColor x y || sameValue x y
 
