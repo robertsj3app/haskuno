@@ -25,7 +25,7 @@ checkWin (x:xs) = if numCards (snd x) == 0 then fst x else checkWin xs
 
 checkUno :: [Player] -> String
 checkUno [] = ""
-checkUno (x:xs) = if numCards (snd x) == 1 then fst x else checkWin xs 
+checkUno (x:xs) = if numCards (snd x) == 1 then fst x else checkUno xs 
 
 startingHands :: GameState -> Integer -> Integer -> GameState -- draw each player seven cards from the shuffled deck
 startingHands gs i n = if i < n then startingHands (drawCard gs i 7) (i + 1) n else gs
