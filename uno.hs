@@ -96,23 +96,20 @@ gameLoop gs = do
                         putStrLn ("Enter the color you wish to select!\n1) Red\n2) Blue\n3) Green\n4) Yellow")
                         choice <- getLine
                         let choiceNum = (read choice :: Integer)
-                        if choiceNum == 1 then do
-                            let playedState = (playCard gs (currentPlayer gs) (actionNum - 1))
+                        let playedState = (playCard gs (currentPlayer gs) (actionNum - 1))
+                        if choiceNum == 1 then do                            
                             let wildFixedState = (updateDiscardPile playedState (Wild Red : tail (discardPile playedState)))
                             putStrLn (getNameFromIndex gs (currentPlayer gs) ++ " changed the color to Red!")
                             gameLoop (getNextPlayer (wildFixedState))
                         else if choiceNum == 2 then do
-                            let playedState = (playCard gs (currentPlayer gs) (actionNum - 1))
                             let wildFixedState = (updateDiscardPile playedState (Wild Blue : tail (discardPile playedState)))
                             putStrLn (getNameFromIndex gs (currentPlayer gs) ++ " changed the color to Blue!")
                             gameLoop (getNextPlayer (wildFixedState))
                         else if choiceNum == 3 then do
-                            let playedState = (playCard gs (currentPlayer gs) (actionNum - 1))
                             let wildFixedState = (updateDiscardPile playedState (Wild Green : tail (discardPile playedState)))
                             putStrLn (getNameFromIndex gs (currentPlayer gs) ++ " changed the color to Green!")
                             gameLoop (getNextPlayer (wildFixedState))
                         else if choiceNum == 4 then do
-                            let playedState = (playCard gs (currentPlayer gs) (actionNum - 1))
                             let wildFixedState = (updateDiscardPile playedState (Wild Yellow : tail (discardPile playedState)))
                             putStrLn (getNameFromIndex gs (currentPlayer gs) ++ " changed the color to Yellow!")
                             gameLoop (getNextPlayer (wildFixedState))
@@ -129,34 +126,28 @@ gameLoop gs = do
                         putStrLn ("Enter the color you wish to select!\n1) Red\n2) Blue\n3) Green\n4) Yellow")
                         choice <- getLine
                         let choiceNum = (read choice :: Integer)
-                        if choiceNum == 1 then do
-                            let playedState = (playCard gs (currentPlayer gs) (actionNum - 1))
-                            let wildFixedState = (updateDiscardPile playedState (DrawFourWild Red : tail (discardPile playedState)))
-                            putStrLn (getNameFromIndex gs (currentPlayer gs) ++ " forced " ++ (getNameFromIndex gs (fixOverhang ((getTurnDirection gs) (currentPlayer gs) 1) (playerList gs))) ++ " to draw 4!")
+                        let playedState = (playCard gs (currentPlayer gs) (actionNum - 1))
+                        putStrLn (getNameFromIndex gs (currentPlayer gs) ++ " forced " ++ (getNameFromIndex gs (fixOverhang ((getTurnDirection gs) (currentPlayer gs) 1) (playerList gs))) ++ " to draw 4!")
+                        if choiceNum == 1 then do                            
+                            let wildFixedState = (updateDiscardPile playedState (DrawFourWild Red : tail (discardPile playedState)))                            
                             putStrLn (getNameFromIndex gs (fixOverhang ((getTurnDirection gs) (currentPlayer gs) 1) (playerList gs)) ++ " drew " ++ show (deck gs !! 0) ++ ", " ++ show (deck gs !! 1) ++ ", " ++ show (deck gs !! 2) ++ " and " ++ show (deck gs !! 3) ++ "!")
                             let drawnState = (drawCard wildFixedState (fixOverhang ((getTurnDirection gs) (currentPlayer gs) 1) (playerList gs)) 4)
                             putStrLn (getNameFromIndex gs (currentPlayer gs) ++ " changed the color to Red!")
                             gameLoop (getNextPlayer (drawnState))
                         else if choiceNum == 2 then do
-                            let playedState = (playCard gs (currentPlayer gs) (actionNum - 1))
                             let wildFixedState = (updateDiscardPile playedState (DrawFourWild Blue : tail (discardPile playedState)))
-                            putStrLn (getNameFromIndex gs (currentPlayer gs) ++ " forced " ++ (getNameFromIndex gs (fixOverhang ((getTurnDirection gs) (currentPlayer gs) 1) (playerList gs))) ++ " to draw 4!")
                             putStrLn (getNameFromIndex gs (fixOverhang ((getTurnDirection gs) (currentPlayer gs) 1) (playerList gs)) ++ " drew " ++ show (deck gs !! 0) ++ ", " ++ show (deck gs !! 1) ++ ", " ++ show (deck gs !! 2) ++ " and " ++ show (deck gs !! 3) ++ "!")
                             let drawnState = (drawCard wildFixedState (fixOverhang ((getTurnDirection gs) (currentPlayer gs) 1) (playerList gs)) 4)
                             putStrLn (getNameFromIndex gs (currentPlayer gs) ++ " changed the color to Blue!")
                             gameLoop (getNextPlayer (drawnState))
                         else if choiceNum == 3 then do
-                            let playedState = (playCard gs (currentPlayer gs) (actionNum - 1))
                             let wildFixedState = (updateDiscardPile playedState (DrawFourWild Green : tail (discardPile playedState)))
-                            putStrLn (getNameFromIndex gs (currentPlayer gs) ++ " forced " ++ (getNameFromIndex gs (fixOverhang ((getTurnDirection gs) (currentPlayer gs) 1) (playerList gs))) ++ " to draw 4!")
                             putStrLn (getNameFromIndex gs (fixOverhang ((getTurnDirection gs) (currentPlayer gs) 1) (playerList gs)) ++ " drew " ++ show (deck gs !! 0) ++ ", " ++ show (deck gs !! 1) ++ ", " ++ show (deck gs !! 2) ++ " and " ++ show (deck gs !! 3) ++ "!")
                             let drawnState = (drawCard wildFixedState (fixOverhang ((getTurnDirection gs) (currentPlayer gs) 1) (playerList gs)) 4)
                             putStrLn (getNameFromIndex gs (currentPlayer gs) ++ " changed the color to Green!")
                             gameLoop (getNextPlayer (drawnState))
                         else if choiceNum == 4 then do
-                            let playedState = (playCard gs (currentPlayer gs) (actionNum - 1))
                             let wildFixedState = (updateDiscardPile playedState (DrawFourWild Yellow : tail (discardPile playedState)))
-                            putStrLn (getNameFromIndex gs (currentPlayer gs) ++ " forced " ++ (getNameFromIndex gs (fixOverhang ((getTurnDirection gs) (currentPlayer gs) 1) (playerList gs))) ++ " to draw 4!")
                             putStrLn (getNameFromIndex gs (fixOverhang ((getTurnDirection gs) (currentPlayer gs) 1) (playerList gs)) ++ " drew " ++ show (deck gs !! 0) ++ ", " ++ show (deck gs !! 1) ++ ", " ++ show (deck gs !! 2) ++ " and " ++ show (deck gs !! 3) ++ "!")
                             let drawnState = (drawCard wildFixedState (fixOverhang ((getTurnDirection gs) (currentPlayer gs) 1) (playerList gs)) 4)
                             putStrLn (getNameFromIndex gs (currentPlayer gs) ++ " changed the color to Yellow!")
